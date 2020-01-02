@@ -9,7 +9,7 @@ import java.util.Optional;
 @Service
 public interface QuestionServiceInterface {
     Question addQuestion(Question question);
-    void removeQuestion(Question question);
+    void removeTestCaseFromQuestion(Long questionId, Long testcaseId);
     void removeQuestion(Long id);
     Optional<Question> findQuestion(Long id);
     Question updateQuestion(Question question);
