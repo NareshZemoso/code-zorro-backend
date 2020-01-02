@@ -1,17 +1,29 @@
-image: java:11
+image: maven:latest
 
 stages:
   - build
-  
+  - test
+  - deploy
+
 before_script:
-   - cd taskSetService
-   - chmod +x mvnw
+  - cd taskSetService
+  - mvn install
+  - chmod +x mvnw
 
 build:
   stage: build
-  script: ./mvnw package
+  script:
+    - mvn clean
+    - ./mvnw package
+
   artifacts:
     paths:
-      - target/demo-0.0.1-SNAPSHOT.jar
+      - target/*.jar$
 
+test:
+  stage: test
+  script:
+    if test -f target/*.jar$; then
+    echo "JAR exists"
+    fi
 
