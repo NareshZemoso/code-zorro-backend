@@ -1,0 +1,17 @@
+image: maven:latest
+
+stages:
+  - build
+
+before_script:
+  - cd user-management
+  - chmod +x mvnw
+
+build:
+  stage: build
+  script:
+    - mvn clean compile assembly:single
+
+  artifacts:
+    paths:
+      - target/*.jar$
