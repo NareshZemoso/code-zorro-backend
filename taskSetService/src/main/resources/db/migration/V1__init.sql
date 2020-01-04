@@ -32,6 +32,12 @@ create table testcase(
     PRIMARY KEY(tcid)
 );
 
+create table accesslink(
+    linkid bigint(20) NOT NULL AUTO_INCREMENT,
+    accesskey varchar(255) NOT NULL,
+    PRIMARY KEY(linkid)
+);
+
 CREATE TABLE test_question (
     test_tid bigint(20) NOT NULL,
     question_qid bigint(20) NOT NULL,

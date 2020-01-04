@@ -2,28 +2,17 @@ image: maven:latest
 
 stages:
   - build
-  - test
-  - deploy
 
 before_script:
   - cd taskSetService
-  - mvn install
   - chmod +x mvnw
 
 build:
   stage: build
   script:
-    - mvn clean
-    - ./mvnw package
+    - mvn clean compile assembly:single
 
   artifacts:
     paths:
       - target/*.jar$
-
-test:
-  stage: test
-  script:
-    if test -f target/*.jar$; then
-    echo "JAR exists"
-    fi
 
