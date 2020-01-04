@@ -1,7 +1,9 @@
 package com.zemoso.codezorro.sessionmanagement.service;
 
+import com.zemoso.codezorro.sessionmanagement.dao.AuditRepository;
 import com.zemoso.codezorro.sessionmanagement.dao.CandidateRepository;
 import com.zemoso.codezorro.sessionmanagement.dao.SessionRepository;
+import com.zemoso.codezorro.sessionmanagement.entities.Audit;
 import com.zemoso.codezorro.sessionmanagement.entities.Candidate;
 import com.zemoso.codezorro.sessionmanagement.entities.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class CandidateService {
     @Autowired
     private SessionRepository sessionRepository;
 
+    @Autowired
+    private AuditRepository auditRepository;
+
     public List<Candidate> test(){
         return candidateRepository.findAll();
     }
@@ -27,7 +32,9 @@ public class CandidateService {
         candidateRepository.save(candidate);
     }
 
-
+    public void auditCode(Audit audit){
+        auditRepository.save(audit);
+    }
     public Session createSession(Candidate candidate){
         Date sessionStartDate= new Date();
         Calendar calendar = Calendar.getInstance();
