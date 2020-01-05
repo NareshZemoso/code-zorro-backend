@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:8080"})
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping("/api/testSession")
 public class MainController {
     @Autowired
@@ -25,7 +25,7 @@ public class MainController {
         return candidateService.test();
     }
 
-    @CrossOrigin(origins = {"http://localhost:8080"})
+    @CrossOrigin(origins = {"http://localhost:3000"})
     @PostMapping("/addCandidate")
     public ResponseEntity<Candidate> addCandidate(@RequestBody Candidate candidate){
         candidateService.save(candidate);
@@ -48,7 +48,7 @@ public class MainController {
 
 
 //this end point mocks compile and run service behavior
-    @CrossOrigin(origins = {"http://localhost:8080"})
+    @CrossOrigin(origins = {"http://localhost:3000"})
     @PostMapping("/compile")
     public ResponseEntity<TestResult> compile(@RequestBody Code code){
         //send the code to compile service and send the results
@@ -59,7 +59,7 @@ public class MainController {
         return new ResponseEntity<TestResult>(result,HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/codeAudit")
     public @ResponseBody Audit gb(@RequestBody Audit audit){
     candidateService.auditCode(audit);
