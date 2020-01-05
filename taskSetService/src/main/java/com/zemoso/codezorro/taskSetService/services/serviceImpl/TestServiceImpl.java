@@ -1,7 +1,9 @@
 package com.zemoso.codezorro.taskSetService.services.serviceImpl;
 
+import com.zemoso.codezorro.taskSetService.model.AccessLink;
 import com.zemoso.codezorro.taskSetService.model.Question;
 import com.zemoso.codezorro.taskSetService.model.Test;
+import com.zemoso.codezorro.taskSetService.repository.AccesslinkRepo;
 import com.zemoso.codezorro.taskSetService.repository.QuestionRepo;
 import com.zemoso.codezorro.taskSetService.repository.TestRepo;
 import com.zemoso.codezorro.taskSetService.services.serviceInterface.TestServiceInterface;
@@ -19,6 +21,9 @@ public class TestServiceImpl implements TestServiceInterface {
 
     @Autowired
     private TestRepo testRepo=null;
+
+    @Autowired
+    private AccesslinkRepo accesslinkRepo;
 
     @Autowired
     private QuestionRepo questionRepo=null;
@@ -55,5 +60,11 @@ public class TestServiceImpl implements TestServiceInterface {
     @Override
     public List<Test> findAll() {
         return testRepo.findAll();
+    }
+
+    @Override
+    public boolean validate(String testLink, String accessKey) {
+        Optional<AccessLink> accessLink = accesslinkRepo.findByAccesskey(accessKey);
+        return accessLink.isPresent() && accessLink.get().getTestlink().equals(testLink);
     }
 }

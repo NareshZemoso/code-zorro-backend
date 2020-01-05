@@ -12,4 +12,5 @@ public interface TestServiceInterface {
     Optional<Test> findTest(Long id);
     Test updateTest(Test test);
     List<Test> findAll();
+    boolean validate(String testLink,String accessKey);
 }

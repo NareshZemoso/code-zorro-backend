@@ -2,6 +2,7 @@ package com.zemoso.codezorro.taskSetService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.flyway.FlywayMigrationStrategy;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@CrossOrigin("localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @EnableDiscoveryClient
 public class TaskSetServiceApplication {
 
@@ -30,5 +31,19 @@ class RestTemplateConfig {
 	@LoadBalanced        // Load balance between service instances running at different ports.
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
+	}
+}
+
+@Configuration
+class FlywayRepair {
+
+	@Bean
+	public FlywayMigrationStrategy repair() {
+		return flyway -> {
+			// repair each script checksum
+			flyway.repair();
+			// before migration is executed
+			flyway.migrate();
+		};
 	}
 }

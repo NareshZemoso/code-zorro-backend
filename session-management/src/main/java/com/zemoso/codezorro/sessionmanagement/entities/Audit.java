@@ -1,15 +1,18 @@
 package com.zemoso.codezorro.sessionmanagement.entities;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.sql.Blob;
 
 @Entity
 @Table(name="audit")
+@Data
 public class Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long auditId;
+    private Long auditId;
 
     @OneToOne
     @JoinColumn(name="candidate_id")
@@ -22,5 +25,6 @@ public class Audit {
     private long questionId;
 
     @Column(name="code")
-    private Blob code;
+    @Lob
+    private byte[] code;
 }

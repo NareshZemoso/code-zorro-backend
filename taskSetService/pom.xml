@@ -110,7 +110,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>fully.qualified.MainClass</mainClass>
+							<mainClass>com.zemoso.codezorro.taskSetService.TaskSetServiceApplication</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

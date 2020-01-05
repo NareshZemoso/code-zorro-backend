@@ -18,6 +18,9 @@ public class AccessLink {
     Long linkid;
 
     @NotNull
+    String testlink;
+
+    @NotNull
     String accesskey=randomAlphaNumeric(10);
 
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

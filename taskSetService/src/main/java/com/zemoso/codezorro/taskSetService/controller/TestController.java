@@ -1,15 +1,18 @@
 package com.zemoso.codezorro.taskSetService.controller;
 
+import com.zemoso.codezorro.taskSetService.controller.dto.Message;
 import com.zemoso.codezorro.taskSetService.model.Question;
 import com.zemoso.codezorro.taskSetService.model.Test;
 import com.zemoso.codezorro.taskSetService.services.serviceInterface.QuestionServiceInterface;
 import com.zemoso.codezorro.taskSetService.services.serviceInterface.TestServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -41,7 +44,27 @@ public class TestController {
         return test;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/validate/{testLink}/{accessKey}")
+    public ResponseEntity<Message> validate(@PathVariable("testLink")String testLink,
+                                            @PathVariable("accessKey")String accessKey)
+    {
+        Message message = new Message();
+        if(testServiceInterface.validate(testLink,accessKey))
+        {
+            message.setSuccess(true);
+            message.setData("Link Validated Successfully");
+        }
+        else
+        {
+            message.setSuccess(false);
+            message.setReason("Link Validation Failed");
+        }
+        return ResponseEntity.ok(message);
+    }
+
     //Retrieve a single test by ID
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/getTest/{testId}")
     public Test getTestById(@PathVariable Long testId) throws Exception {
         return testServiceInterface.findTest(testId).orElseThrow(Exception::new);
@@ -76,7 +99,7 @@ public class TestController {
 
     //Delete a particular question from the test
     @DeleteMapping("/{testId}/deleteQuestion/{questionId}")
-    public void deleteQuestionFromTest(@PathVariable Long testId, @PathVariable Long questionId){
-        testServiceInterface.removeQuestionFromTest(testId,questionId);
+    public void deleteQuestionFromTest(@PathVariable Long testId, @PathVariable Long questionId) {
+        testServiceInterface.removeQuestionFromTest(testId, questionId);
     }
 }
