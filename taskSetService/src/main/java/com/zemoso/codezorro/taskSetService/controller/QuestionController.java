@@ -22,6 +22,12 @@ public class QuestionController {
     @Autowired
     private TestCaseServiceInterface testCaseServiceInterface=null;
 
+    @GetMapping("/")
+    public String respond()
+    {
+        return "Hello";
+    }
+
     //Create
     @PostMapping("/addQuestion")
     public Question createQuestion(@Valid @RequestBody Question question){
