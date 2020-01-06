@@ -31,7 +31,7 @@ public class TestServiceImpl implements TestServiceInterface {
     @Override
     public Test addTest(Test test) {
         test=testRepo.save(test);
-        test.setTestLink("https://www.codezorro.com/test/"+test.getTid());
+        test.setTestLink("test-"+test.getTid());
         return testRepo.save(test);
     }
 
