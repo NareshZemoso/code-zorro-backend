@@ -12,22 +12,16 @@ import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import com.zemoso.codezorro.sessionmanagement.utils.RetrieveUtil;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.List;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
-
 @SpringBootTest
 public class MainControllerTest {
     @Autowired
@@ -44,7 +38,7 @@ public class MainControllerTest {
 
     @Test
     public void httpStatusCodeOk() throws Exception{
-        HttpUriRequest request = new HttpGet( "http://localhost:8085/api/testSession/candidates" );
+        HttpUriRequest request = new HttpGet( "http://localhost:8775/api/testSession/candidates" );
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute( request );
         Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
     }
@@ -52,7 +46,7 @@ public class MainControllerTest {
     @Test
     public void testJsonResponse() throws Exception{
         String jsonMimeType = "application/json";
-        HttpUriRequest request = new HttpGet( "http://localhost:8085/api/testSession/candidates" );
+        HttpUriRequest request = new HttpGet( "http://localhost:8775/api/testSession/candidates" );
         HttpResponse response = HttpClientBuilder.create().build().execute( request );
         String mimeType = ContentType.getOrDefault(response.getEntity()).getMimeType();
         Assert.assertEquals( jsonMimeType, mimeType );
@@ -60,7 +54,7 @@ public class MainControllerTest {
 
     @Test
     public void jsonPayloadCandidates() throws Exception{
-        HttpUriRequest request = new HttpGet( "http://localhost:8085/api/testSession/candidates");
+        HttpUriRequest request = new HttpGet( "http://localhost:8775/api/testSession/candidates");
         HttpResponse response = HttpClientBuilder.create().build().execute( request );
         List<Candidate> list= RetrieveUtil.retrieveResourceFromResponse(
                 response, List.class);

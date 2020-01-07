@@ -1,6 +1,6 @@
 package com.zemoso.codezorro.sessionmanagement.controller;
-import com.zemoso.codezorro.sessionmanagement.dto.Code;
-import com.zemoso.codezorro.sessionmanagement.dto.TestResult;
+import com.zemoso.codezorro.sessionmanagement.pojos.Code;
+import com.zemoso.codezorro.sessionmanagement.pojos.TestResult;
 import com.zemoso.codezorro.sessionmanagement.entities.Audit;
 import com.zemoso.codezorro.sessionmanagement.entities.Candidate;
 import com.zemoso.codezorro.sessionmanagement.entities.Session;
@@ -10,34 +10,36 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin
 @RequestMapping("/api/testSession")
 public class MainController {
     @Autowired
     private CandidateService candidateService;
 
+    @CrossOrigin
     @GetMapping("/candidates")
     public List<Candidate> findAll(){
         return candidateService.test();
     }
 
-    @CrossOrigin(origins = {"http://localhost:3000"})
+    @CrossOrigin
     @PostMapping("/addCandidate")
     public ResponseEntity<Candidate> addCandidate(@RequestBody Candidate candidate){
         candidateService.save(candidate);
         return new ResponseEntity<>(candidate, HttpStatus.OK);
     }
 
+    @CrossOrigin
     @PostMapping("/startTest")
     public ResponseEntity<Session> startTest(@RequestBody Candidate candidate){
        Session session=candidateService.createSession(candidate);
         return new ResponseEntity<>(session,HttpStatus.OK);
     }
 
+    @CrossOrigin
     @DeleteMapping("/endTest")
     public ResponseEntity<String> endTest(@RequestBody Candidate candidate){
         if(candidateService.deleteSession(candidate)!=null)
@@ -48,7 +50,7 @@ public class MainController {
 
 
 //this end point mocks compile and run service behavior
-    @CrossOrigin(origins = {"http://localhost:3000"})
+    @CrossOrigin
     @PostMapping("/compile")
     public ResponseEntity<TestResult> compile(@RequestBody Code code){
         //send the code to compile service and send the results
@@ -59,7 +61,7 @@ public class MainController {
         return new ResponseEntity<TestResult>(result,HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin
     @PostMapping("/codeAudit")
     public @ResponseBody Audit gb(@RequestBody Audit audit){
     candidateService.auditCode(audit);

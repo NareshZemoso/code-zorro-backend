@@ -1,4 +1,4 @@
-package com.zemoso.codezorro.sessionmanagement.dto;
+package com.zemoso.codezorro.sessionmanagement.pojos;
 
 import lombok.Data;
 
