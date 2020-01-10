@@ -20,7 +20,6 @@ public class CandidateService {
     private CandidateRepository candidateRepository;
     @Autowired
     private SessionRepository sessionRepository;
-
     @Autowired
     private AuditRepository auditRepository;
 
@@ -28,8 +27,9 @@ public class CandidateService {
         return candidateRepository.findAll();
     }
 
-    public void save(Candidate candidate){
+    public Candidate save(Candidate candidate){
         candidateRepository.save(candidate);
+        return candidate;
     }
 
     public void auditCode(Audit audit){
@@ -39,7 +39,7 @@ public class CandidateService {
         Date sessionStartDate= new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(sessionStartDate);
-        calendar.add(Calendar.HOUR_OF_DAY, 2);
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
         Date sessionEndDate= calendar.getTime();
         Session session= new Session();
         session.setCandidate(candidate);
@@ -64,4 +64,5 @@ public class CandidateService {
         }
         return deletedSession;
     }
+
 }

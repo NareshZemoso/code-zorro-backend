@@ -19,7 +19,8 @@ public class Candidate {
     private String candidateAddress;
 
     @Column(name="resume")
-    private Blob resume;
+    @Lob
+    private byte[] resume;
 
     @Column(name="candidate_email")
     private String candidateEmail;
