@@ -1,4 +1,4 @@
-package com.zemoso.codezorro.usermanagement;
+package com.zemoso.codezorro.sessionmanagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,27 +6,24 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class UserManagementApplication
-{
+public class SessionManagementApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserManagementApplication.class, args);
+		SpringApplication.run(SessionManagementApplication.class, args);
 	}
+
+
 }
 
 @Configuration
 class RestTemplateConfig {
 	@Bean
 	@LoadBalanced
-	public RestTemplate restTemplate()
-	{
+	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
 }
