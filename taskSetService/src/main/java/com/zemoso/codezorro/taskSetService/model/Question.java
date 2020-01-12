@@ -17,12 +17,12 @@ import java.util.Set;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-public class Question {
+public class Question implements Model{
 
     @Id
-    @Column(name = "qid")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long qid;
+    private Long id;
 
     @NotNull
     private String qname;
@@ -69,11 +69,4 @@ public class Question {
             },
             mappedBy = "questions")
     private Set<Test> tests = new HashSet<>();
-
-    @OneToMany(mappedBy = "question",fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST
-            })
-    private Set<TestCase> testCases = new HashSet<>();
 }

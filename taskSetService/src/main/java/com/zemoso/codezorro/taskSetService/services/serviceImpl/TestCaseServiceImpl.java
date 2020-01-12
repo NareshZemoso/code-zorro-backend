@@ -41,4 +41,9 @@ public class TestCaseServiceImpl implements TestCaseServiceInterface {
     public List<TestCase> findAll() {
         return testCaseRepo.findAll();
     }
+
+    @Override
+    public void setTestCaseRepo(TestCaseRepo testCaseRepo) {
+        this.testCaseRepo=testCaseRepo;
+    }
 }

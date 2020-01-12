@@ -1,6 +1,7 @@
 package com.zemoso.codezorro.taskSetService.services.serviceInterface;
 
 import com.zemoso.codezorro.taskSetService.model.TestCase;
+import com.zemoso.codezorro.taskSetService.repository.TestCaseRepo;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,4 +12,5 @@ public interface TestCaseServiceInterface {
     Optional<TestCase> findTestCase(Long id);
     TestCase updateTestCase(TestCase testCase);
     List<TestCase> findAll();
+    void setTestCaseRepo(TestCaseRepo testCaseRepo);
 }

@@ -1,0 +1,46 @@
+version: "3"
+services:
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: tarun123
+      MYSQL_USER: root
+  eurekaserver:
+    image: cz/eureka
+    ports:
+      - "1111:1111"
+    depends_on:
+      - mysql
+  zuul:
+    image: cz/zuul
+    ports:
+      - "8775:8775"
+    depends_on:
+      - eurekaserver
+      - mysql
+  usermanagement:
+    image: cz/usermgmt
+    ports:
+      - "8001:8001"
+    depends_on:
+      - eurekaserver
+      - mysql
+  taskset:
+    image: cz/taskset
+    ports:
+      - "8002:8002"
+    depends_on:
+      - eurekaserver
+      - mysql
+  testsession:
+    image: cz/testsession
+    ports:
+      - "8003:8003"
+    depends_on:
+      - eurekaserver
+      - mysql
+
+
+

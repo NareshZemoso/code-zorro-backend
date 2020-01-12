@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
-public abstract class User {
+public abstract class User implements Model{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -20,6 +20,6 @@ public abstract class User {
 
     @Email
     @NotNull
-    private String email;
+    protected String email;
 
 }

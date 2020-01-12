@@ -4,7 +4,6 @@ import com.zemoso.codezorro.taskSetService.model.AccessLink;
 import com.zemoso.codezorro.taskSetService.model.Question;
 import com.zemoso.codezorro.taskSetService.model.Test;
 import com.zemoso.codezorro.taskSetService.repository.AccesslinkRepo;
-import com.zemoso.codezorro.taskSetService.repository.QuestionRepo;
 import com.zemoso.codezorro.taskSetService.repository.TestRepo;
 import com.zemoso.codezorro.taskSetService.services.serviceInterface.TestServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,32 +18,42 @@ import java.util.Set;
 @Transactional
 public class TestServiceImpl implements TestServiceInterface {
 
+    @Override
+    public void setTestRepo(TestRepo testRepo) {
+        this.testRepo = testRepo;
+    }
+
     @Autowired
     private TestRepo testRepo=null;
 
     @Autowired
-    private AccesslinkRepo accesslinkRepo;
-
-    @Autowired
-    private QuestionRepo questionRepo=null;
+    private AccesslinkRepo accesslinkRepo=null;
 
     @Override
     public Test addTest(Test test) {
         test=testRepo.save(test);
-        test.setTestLink("test-"+test.getTid());
+        test.setTestLink("test-"+test.getId());
         return testRepo.save(test);
     }
 
     @Override
-    public void removeQuestionFromTest(Long testId, Long questionId) {
+    public void removeAllQuestionsFromTest(Long testId) {
         Set<Question> set=testRepo.findById(testId).get().getQuestions();
-        set.remove(questionRepo.findById(questionId).get());
+        set.clear();
         testRepo.findById(testId).get().setQuestions(set);
     }
 
     @Override
     public void removeTest(Long id) {
+        removeAllQuestionsFromTest(id);
         testRepo.deleteById(id);
+    }
+
+    @Override
+    public void removeAllTests() {
+        for(Test test:testRepo.findAll()){
+            removeTest(test.getId());
+        }
     }
 
     @Override

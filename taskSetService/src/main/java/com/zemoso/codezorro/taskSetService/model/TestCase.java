@@ -15,12 +15,12 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-public class TestCase {
+public class TestCase implements Model{
 
     @Id
-    @Column(name = "tcid")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tcid;
+    private Long id;
 
     @NotNull
     private String input;
@@ -31,9 +31,10 @@ public class TestCase {
     @NotNull
     private int weightage;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "question_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    @JoinColumn(name = "qid")
     private Question question;
+
 }

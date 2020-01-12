@@ -8,26 +8,25 @@ import com.zemoso.codezorro.usermanagement.services.interfaces.RecruiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.Role;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecruiterServiceImpl implements RecruiterService {
 
     @Autowired
-    RecruiterRepository recruiterRepository;
+    private RecruiterRepository recruiterRepository;
 
     @Transactional
-    public Recruiter getOrCreateByEmail(String name,String email)
+    public Recruiter createRecruiter(String name, String email)
     {
-        return recruiterRepository.findByEmail(email).orElseGet(()->{
+
             Recruiter recruiter = new Recruiter();
             recruiter.setName(name);
             recruiter.setEmail(email);
             recruiter.setRole(RoleType.GUEST);
             return recruiterRepository.save(recruiter);
-        });
     }
 
     @Override
@@ -41,11 +40,6 @@ public class RecruiterServiceImpl implements RecruiterService {
         return recruiterRepository.findByEmail(email).orElseThrow(()->new InvalidUserException(email,"No such Recruiter"));
     }
 
-    @Transactional
-    public void removeRecruiter(String email)throws InvalidUserException
-    {
-        recruiterRepository.delete(getByEmail(email));
-    }
 
     @Transactional
     @Override
@@ -56,4 +50,17 @@ public class RecruiterServiceImpl implements RecruiterService {
     }
 
 
+    public void setRecruiterRepository(RecruiterRepository recruiterRepository) {
+        this.recruiterRepository = recruiterRepository;
+    }
+
+    @Override
+    public Optional<Recruiter> getById(Long id) {
+        return recruiterRepository.findById(id);
+    }
+
+    @Override
+    public void removeById(Long id) {
+        recruiterRepository.deleteById(id);
+    }
 }
