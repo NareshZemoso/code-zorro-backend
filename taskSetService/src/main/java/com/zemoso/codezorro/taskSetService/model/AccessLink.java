@@ -12,10 +12,11 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Table(name = "accesslink")
 @EntityListeners(AuditingEntityListener.class)
-public class AccessLink {
+public class AccessLink implements Model{
     @Id
+    @Column(name = "linkid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long linkid;
+    Long id;
 
     @NotNull
     String testlink;
@@ -32,4 +33,5 @@ public class AccessLink {
         }
         return builder.toString();
     }
+
 }

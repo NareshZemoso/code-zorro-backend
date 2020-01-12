@@ -19,12 +19,21 @@ import java.util.Set;
 @Setter
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-public class Test {
+public class Test implements Model{
+
+    public Test(){}
+
+    public Test(String tname, String category, Time time, String testLink){
+        this.tname = tname;
+        this.category = category;
+        this.time = time;
+        this.testLink = testLink;
+    }
 
     @Id
-    @Column(name = "tid")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tid;
+    private Long id;
 
     @NotNull
     @NaturalId
@@ -42,13 +51,13 @@ public class Test {
 
     @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             })
     @JoinTable(name = "test_question",
-            joinColumns = { @JoinColumn(name = "test_tid") },
-            inverseJoinColumns = { @JoinColumn(name = "question_qid") })
+            joinColumns = { @JoinColumn(name = "test_id") },
+            inverseJoinColumns = { @JoinColumn(name = "question_id") })
     private Set<Question> questions = new HashSet<>();
 }

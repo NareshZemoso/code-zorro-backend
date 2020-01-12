@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -39,7 +38,7 @@ public class TestController {
         Question question = questionServiceInterface.findQuestion(questionId).orElseThrow(Exception::new);
         Set<Question> set = test.getQuestions();
         set.add(question);
-        test.setQuestions(set);                                                                                                 
+        test.setQuestions(set);
         testServiceInterface.addTest(test);
         return test;
     }
@@ -97,9 +96,8 @@ public class TestController {
         testServiceInterface.removeTest(testId);
     }
 
-    //Delete a particular question from the test
-    @DeleteMapping("/{testId}/deleteQuestion/{questionId}")
-    public void deleteQuestionFromTest(@PathVariable Long testId, @PathVariable Long questionId) {
-        testServiceInterface.removeQuestionFromTest(testId, questionId);
+    @DeleteMapping("/deleteAllTests")
+    public void deleteAllTests(){
+        testServiceInterface.removeAllTests();
     }
 }

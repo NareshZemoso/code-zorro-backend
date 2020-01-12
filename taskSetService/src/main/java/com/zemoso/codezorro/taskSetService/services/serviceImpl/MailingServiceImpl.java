@@ -7,6 +7,7 @@ import com.zemoso.codezorro.taskSetService.services.serviceInterface.MailingServ
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
@@ -28,7 +29,7 @@ public class MailingServiceImpl implements MailingServiceInterface {
             accessLink.setTestlink(testLink);
             accessLink = accesslinkRepo.save(accessLink);
             Content content = new Content("text/plain", "Hello and greetings from code zorro," +
-                    String.format("\nYour test link is: http://localhost:3000#candidate/testlink=%s&accessKey=%s",
+                    String.format("%nYour test link is: http://localhost:3000#candidate/testlink=%s&accessKey=%s",
                             accessLink.getTestlink(),accessLink.getAccesskey()));
 
             Mail mail = new Mail(from, subject, to, content);
@@ -42,6 +43,7 @@ public class MailingServiceImpl implements MailingServiceInterface {
             System.out.println(response.getStatusCode());
             System.out.println(response.getBody());
             System.out.println(response.getHeaders());
+
         }
     }
 }
